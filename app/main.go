@@ -16,8 +16,8 @@ func main() {
 		user.PUT("/reg", handler.UserReg)
 		user.POST("/login", handler.UserLogin)
 	}
-	// router.GET("/get", handler.Getting)
-	// router.POST("/userreg", handler.UserReg)
+	//add to main
+
 	router.Run(":3000")
 
 }
