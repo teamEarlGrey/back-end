@@ -16,11 +16,6 @@ func main() {
 		user.PUT("/reg", handler.UserReg)
 		user.POST("/login", handler.UserLogin)
 	}
-	//add to main
-	//commit from feature/kantaro branch
-	//2nd aaa
-	//aaa
-	//test branch
 
 	router.Run(":3000")
 
