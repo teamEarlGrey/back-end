@@ -17,6 +17,7 @@ func main() {
 		user.POST("/login", handler.UserLogin)
 		user.PUT("/update", handler.UpdateUser)
 		user.DELETE("/delete", handler.DeleteUser)
+		user.POST("/validate", handler.SampleJwtValidation)
 
 	}
 
