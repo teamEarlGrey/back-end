@@ -15,6 +15,9 @@ func main() {
 		user.GET("/get", handler.Getting)
 		user.PUT("/reg", handler.UserReg)
 		user.POST("/login", handler.UserLogin)
+		user.PUT("/update", handler.UpdateUser)
+		user.DELETE("/delete", handler.DeleteUser)
+
 	}
 
 	router.Run(":3000")
