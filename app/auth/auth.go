@@ -14,12 +14,11 @@ type UserJwt struct {
 
 func CreateTokenString(id uint, mail string) string {
 
-	// User情報をtokenに込める
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), &UserJwt{
 		Id:   id,
 		Mail: mail,
 	})
-	// Secretで文字列にする. このSecretはサーバだけが知っている
+
 	tokenstring, err := token.SignedString([]byte("foobar"))
 	if err != nil {
 		log.Fatalln(err)
@@ -34,13 +33,11 @@ func ValidateTokenString(tokenstring string) UserJwt {
 		return []byte("foobar"), nil
 	})
 
-	// Parseメソッドを使うと、Claimsはmapとして得られる
 	log.Println(token.Claims, err)
 	userJwt := UserJwt{}
 	token, err = jwt.ParseWithClaims(tokenstring, &userJwt, func(token *jwt.Token) (interface{}, error) {
 		return []byte("foobar"), nil
 	})
 	return userJwt
-	//log.Println(token.Valid, user, err)
 
 }
