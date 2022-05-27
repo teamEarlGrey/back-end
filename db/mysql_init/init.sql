@@ -24,7 +24,7 @@ INSERT INTO timer(timeNo, sTime, eTime)
 -- 先生たちの権限情報
 CREATE TABLE permission(
 	perNo int auto_increment,
-	permission char(2),
+	permission char(2) not null,
 	update_at datetime,
 	create_at datetime,
 	delete_at datetime,
