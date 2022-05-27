@@ -2,19 +2,19 @@ CREATE DATABASE IF NOT EXISTS earlGrey;
 use earlGrey;
 
 -- 何限目の情報を格納している
-CREATE TABLE timer(
-	timeNo char(3) not null,
-	sTime char(5) not null,
-	eTime char(5)not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+CREATE TABLE timers(
+	time_no char(3) not null,
+	s_time char(5) not null,
+	e_time char(5)not null,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
-	primary key(timeNo)
+	primary key(time_no)
 );
 
 -- data
-INSERT INTO timer(timeNo, sTime, eTime)
+INSERT INTO timers(time_no, s_time, e_time)
   VALUES("1限目", "09:15", "10:45"),
         ("2限目", "11:00", "12:30"),
         ("3限目", "13:30", "15:00"),
@@ -22,119 +22,119 @@ INSERT INTO timer(timeNo, sTime, eTime)
         ("5限目", "17:00", "18:30");
 
 -- 先生たちの権限情報
-CREATE TABLE permission(
-	perNo int auto_increment,
+CREATE TABLE permissions(
+	per_no int auto_increment,
 	permission char(2),
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
-	primary key(perNo)
+	primary key(per_no)
 );
 
 -- data
-INSERT INTO permission(permission)
+INSERT INTO permissions(permission)
   VALUES("予約"),
         ("申請");
 
 -- 先生の情報
 CREATE TABLE teachers(
-	teacherNo int auto_increment,
+	teacher_no int auto_increment,
 	name varchar(20) not null,
-	perNo int not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	per_no int not null,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
-	primary key(teacherNo),
-	foreign key(perNo) references permission(perNo)
+	primary key(teacher_no),
+	foreign key(per_no) references permissions(per_no)
 );
 
 -- sampel data
-INSERT INTO teachers(name, perNo)
+INSERT INTO teachers(name, per_no)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
         ("小戎冴茄", 2);
 
 -- 予約申請の状態を格納している（承認など）
-CREATE TABLE state(
-	stateNo int auto_increment,
-	stateName char(4) not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+CREATE TABLE states(
+	state_no int auto_increment,
+	state_name char(4) not null,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
-	primary key(stateNo)
+	primary key(state_no)
 );
 
 -- data
-INSERT INTO state(stateName)
+INSERT INTO states(state_name)
   VALUES("承認済み"),
         ("承認待ち"),
         ("否認");
 
 -- 教室の情報
 CREATE TABLE rooms(
-	roomNo char(4),
+	room_no char(4),
 	memo varchar(255),
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
-	primary key(roomNo)
+	primary key(room_no)
 );
 
 -- data
-INSERT INTO rooms(roomNo, memo)
+INSERT INTO rooms(room_no, memo)
   VALUES("1204", "コンセントプラグ：床"),
         ("1205", "コンセントプラグ：床"),
         ("2031", "コンセントプラグ：机の上, ネットワーク機器あり");
 
 -- 時間割り
-CREATE TABLE timetable(
+CREATE TABLE timetables(
 	No int auto_increment,
 	class char(5) not null,
-	roomNo char(4) not null,
+	room_no char(4) not null,
 	name varchar(40) not null,
 	youbi char(3) not null,
-	teacherNo int not null,
-	timeNo char(3) not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	teacher_no int not null,
+	time_no char(3) not null,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(No),
-	foreign key(roomNo) references rooms(roomNo),
-	foreign key(teacherNo) references teachers(teacherNo),
-	foreign key(timeNo) references timer(timeNo)
+	foreign key(room_no) references rooms(room_no),
+	foreign key(teacher_no) references teachers(teacher_no),
+	foreign key(time_no) references timers(time_no)
 );
 
 -- sample data
-INSERT INTO timetable(class, roomNo, name, youbi, teacherNo, timeNo)
+INSERT INTO timetables(class, room_no, name, youbi, teacher_no, time_no)
   VALUES("IE4A", "1205", "システム開発演習５", "Fri", 1, "3限目"),
         ("IE4A", "1205", "システム開発演習５", "Fri", 1, "4限目");
 
 -- 予約
-CREATE TABLE reservation(
-	reseNo int auto_increment,
-	teacherNo int not null,
-	roomNo char(4) not null,
-	reseDate date not null,
-	sTime time not null,
-	eTime time not null,
+CREATE TABLE reservations(
+	rese_no int auto_increment,
+	teacher_no int not null,
+	room_no char(4) not null,
+	rese_date date not null,
+	s_time time not null,
+	e_time time not null,
 	purpose varchar(150) not null,
-	requestDate date not null,
-	stateNo int not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	request_date date not null,
+	state_no int not null,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
-	primary key(reseNo),
-	foreign key(teacherNo) references teachers(teacherNo),
-	foreign key(roomNo) references rooms(roomNo),
-	foreign key(stateNo) references state(stateNo)
+	primary key(rese_no),
+	foreign key(teacher_no) references teachers(teacher_no),
+	foreign key(room_no) references rooms(room_no),
+	foreign key(state_no) references states(state_no)
 );
 
 -- sample data
-INSERT INTO reservation(teacherNo, roomNo, reseDate, sTime, eTime, purpose, requestDate, stateNo)
+INSERT INTO reservations(teacher_no, room_no, rese_date, s_time, e_time, purpose, request_date, state_no)
   VALUES(1, "1204", "2022-06-01", "12:00", "13:00", "面談", "2022-05-27", 2);
