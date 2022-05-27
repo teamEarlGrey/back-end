@@ -14,7 +14,6 @@ import (
 
 func Getting(c *gin.Context) {
 	db := infra.DBInit()
-	//user := model.User{}
 	users := []model.User{}
 
 	if result := db.Find(&users); result.Error != nil {
@@ -75,18 +74,10 @@ func UserLogin(c *gin.Context) {
 
 	mail := userLoginJson.UserMail
 	password := userLoginJson.UserPassword
-	fmt.Println(mail)
-	fmt.Println(password)
-	// hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 12) //ハッシュ
-
-	// if err != nil {
-	// 	panic("failed to hash password")
-	// }
 
 	db := infra.DBInit()
 	user := model.User{}
 
-	// Get first matched record
 	result := db.Select("password", "mail", "id").Where("mail = ?", mail).First(&user)
 
 	if result.Error != nil {
@@ -101,8 +92,7 @@ func UserLogin(c *gin.Context) {
 		return
 
 	}
-	fmt.Println(user.ID)
-	fmt.Println(user.Mail)
+
 	token := auth.CreateTokenString(user.ID, user.Mail)
 	c.JSON(http.StatusOK, gin.H{"message": "succeed login", "token": token})
 
@@ -124,7 +114,6 @@ func UpdateUser(c *gin.Context) {
 	db := infra.DBInit()
 	user := model.User{}
 
-	// Get first matched record
 	result := db.Select("password").Where("mail = ?", mail).First(&user)
 
 	if result.Error != nil {
@@ -133,7 +122,6 @@ func UpdateUser(c *gin.Context) {
 	}
 
 	if isAuthorized := bcrypt.CompareHashAndPassword(user.Password, []byte(password)); isAuthorized != nil {
-
 		fmt.Println("不一致")
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "パスワードかメールアドレスが正しくありません"})
 		return
@@ -181,7 +169,6 @@ func DeleteUser(c *gin.Context) {
 	db := infra.DBInit()
 	user := model.User{}
 
-	// Get first matched record
 	result := db.Select("password", "ID").Where("mail = ?", mail).First(&user)
 
 	if result.Error != nil {
@@ -195,12 +182,6 @@ func DeleteUser(c *gin.Context) {
 		c.JSON(http.StatusUnauthorized, gin.H{"message": "パスワードかメールアドレスが正しくありません"})
 		return
 	}
-
-	fmt.Println("user ID !!!!!!!!!!!")
-	fmt.Println(user.ID)
-	fmt.Println(user.Age)
-	fmt.Println(user.Mail)
-	fmt.Println(user.Password)
 
 	if result = db.Where("mail = ?", mail).Delete(&user); result.Error != nil {
 		fmt.Println("データ削除失敗")
