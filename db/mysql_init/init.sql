@@ -23,11 +23,11 @@ INSERT INTO timers(time_no, s_time, e_time)
 
 -- 先生たちの権限情報
 CREATE TABLE permission(
-	per_no int auto_increment,
+	perNo int auto_increment,
 	permission char(2) not null,
-	updated_at datetime,
-	created_at datetime,
-	deleted_at datetime,
+	update_at datetime,
+	create_at datetime,
+	delete_at datetime,
 
 	primary key(perNo)
 );
