@@ -14,20 +14,18 @@ import (
 
 func Getting(c *gin.Context) {
 	db := infra.DBInit()
-	users := []model.User{}
+	timers := []model.Timer{}
 
-	if result := db.Find(&users); result.Error != nil {
+	if result := db.Find(&timers); result.Error != nil {
 		fmt.Println("データ取得失敗")
 	}
 	// fmt.Println(users)
-	for i, v := range users {
+	for i, v := range timers {
 		fmt.Printf("%v回目", i)
-		fmt.Println(v.Age)
-		fmt.Println(v.CreatedAt)
-		fmt.Println(v.DeletedAt)
+		fmt.Println(v.TimeNo)
+		fmt.Println(v.STime)
+		fmt.Println(v.ETime)
 		fmt.Println(v.ID)
-		fmt.Println(v.Mail)
-		fmt.Println(v.Password)
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "hello world"})

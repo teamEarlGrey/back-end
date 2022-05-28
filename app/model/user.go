@@ -12,7 +12,21 @@ type Product struct {
 
 type User struct {
 	gorm.Model
-	Mail     string `gorm:"unique"`
-	Password []byte
-	Age      uint8
+	Mail          string `gorm:"unique"`
+	Password      []byte
+	Age           uint8
+	SamapleSample string
+}
+
+type Timer struct {
+	gorm.Model
+	TimeNo string `gorm:"primaryKey"`
+	STime  string `gorm:"not null"`
+	ETime  string `gorm:"not null"`
+}
+
+type Permmission struct {
+	gorm.Model
+	PerNo      string `gorm:"primaryKey, autoIncrement"`
+	Permission string
 }

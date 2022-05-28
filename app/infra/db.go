@@ -16,6 +16,8 @@ func DBInit() *gorm.DB {
 
 	db.AutoMigrate(&model.Product{})
 	db.AutoMigrate(&model.User{})
+	// db.AutoMigrate(&model.Permmission{})
+	// db.AutoMigrate((&model.Timer{}))
 
 	return db
 }
