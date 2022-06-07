@@ -10,7 +10,7 @@ services:
       #dockerfile: Dockerfile
       dockerfile: Dockerfile-alpine
     ports:
-      - 3000:3000
+      - 4000:3000
     depends_on:
       - db
   db:

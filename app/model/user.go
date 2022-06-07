@@ -24,9 +24,3 @@ type Timer struct {
 	STime  string `gorm:"not null"`
 	ETime  string `gorm:"not null"`
 }
-
-type Permmission struct {
-	gorm.Model
-	PerNo      string `gorm:"primaryKey, autoIncrement"`
-	Permission string
-}
