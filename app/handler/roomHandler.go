@@ -40,42 +40,29 @@ func GetRoomInfo(c *gin.Context) {
 	fmt.Println("teachersテーブル")
 	for _, v := range teachers {
 		fmt.Printf("-----------------------------")
-		fmt.Printf("%v, %v, %v\n", v.TeacherNo, v.Name, v.PerNo)
+		fmt.Printf("%v, %v, %v\n", v.TeacherNo, v.TeacherName, v.PerNo)
 	}
 
 	fmt.Println("timetableテーブル")
 	for _, v := range timetables {
 		fmt.Println("-------------------------")
-		fmt.Printf("%v, %v, %v, %v, %v, %v, %v\n", v.No, v.Class, v.RoomNo, v.Name, v.Youbi, v.TeacherNo, v.TimeNo)
+		fmt.Printf("%v, %v, %v, %v, %v, %v, %v\n", v.No, v.Class, v.RoomNo, v.SubjectName, v.Youbi, v.TeacherNo, v.TimeNo)
 	}
 
 	roomResults := []model.RoomResult{}
-	result := db.Table("teachers").
-		Select("timetables.room_no, timetables.class, timetables.time_no, teachers.name, timetables.name").
-		Joins("left join timetables on teachers.teacher_no = timetables.teacher_no").Scan(&roomResults)
+	result := db.Table("timetables").
+		Select("timetables.room_no, timetables.class, timetables.time_no, teachers.teacher_name, timetables.subject_name").
+		Joins("left join teachers on timetables.teacher_no = teachers.teacher_no").Scan(&roomResults)
 
 	if result.Error != nil {
 		c.JSON(http.StatusConflict, gin.H{"status": 400})
 		return
 	}
-
-	for i, v := range roomResults {
-		fmt.Printf("%v回目\n", i)
-		fmt.Printf("%v, %v, %v, %v, %v\n", v.RoomNum, v.Class, v.TimeNo, v.Teacher, v.Subject)
+	fmt.Println("結合後のテーブル")
+	for _, v := range roomResults {
+		fmt.Println("-------------------------------------------------------------------")
+		fmt.Printf("%v, %v, %v, %v, %v\n", v.RoomNo, v.Class, v.TimeNo, v.TeacherName, v.SubjectName)
 	}
-	// if result := db.Find(&timers); result.Error != nil {
-	// 	fmt.Println("データ取得失敗")
-	// }
-	// // fmt.Println(users)
-	// for i, v := range timers {
-	// 	fmt.Printf("%v回目", i)
-	// 	fmt.Println(v.TimeNo)
-	// 	fmt.Println(v.STime)
-	// 	fmt.Println(v.ETime)
-	// 	fmt.Println(v.ID)
-	// }
-
-	//
 
 	c.JSON(http.StatusOK, gin.H{"message": buildingNumAndFloor})
 }

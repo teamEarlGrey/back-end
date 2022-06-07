@@ -1,9 +1,9 @@
 package model
 
 type RoomResult struct {
-	RoomNum string
-	Class   string
-	TimeNo  string
-	Teacher string
-	Subject string
+	RoomNo      uint16
+	Class       string
+	TimeNo      string
+	TeacherName string
+	SubjectName string
 }

@@ -40,7 +40,7 @@ INSERT INTO permissions(permission)
 -- 先生の情報
 CREATE TABLE teachers(
 	teacher_no int auto_increment,
-	name varchar(20) not null,
+	teacher_name varchar(20) not null,
 	per_no int not null,
 	updated_at datetime,
 	created_at datetime,
@@ -51,7 +51,7 @@ CREATE TABLE teachers(
 );
 
 -- sampel data
-INSERT INTO teachers(name, per_no)
+INSERT INTO teachers(teacher_name, per_no)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
         ("小戎冴茄", 2);
@@ -95,7 +95,7 @@ CREATE TABLE timetables(
 	No int auto_increment,
 	class char(5) not null,
 	room_no char(4) not null,
-	name varchar(40) not null,
+	subject_name varchar(40) not null,
 	youbi char(3) not null,
 	teacher_no int not null,
 	time_no char(3) not null,
@@ -110,7 +110,7 @@ CREATE TABLE timetables(
 );
 
 -- sample data
-INSERT INTO timetables(class, room_no, name, youbi, teacher_no, time_no)
+INSERT INTO timetables(class, room_no, subject_name, youbi, teacher_no, time_no)
   VALUES("IE4A", "1205", "システム開発演習５", "Fri", 1, "3限目"),
         ("IE4A", "1205", "システム開発演習５", "Fri", 1, "4限目");
 
