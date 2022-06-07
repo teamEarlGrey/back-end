@@ -37,5 +37,7 @@ func GetRoomInfo(c *gin.Context) {
 	// 	fmt.Println(v.ID)
 	// }
 
+	//
+
 	c.JSON(http.StatusOK, gin.H{"message": buildingNumAndFloor})
 }
