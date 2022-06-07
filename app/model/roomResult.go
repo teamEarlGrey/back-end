@@ -1,7 +1,7 @@
 package model
 
 type RoomResult struct {
-	RoomNum uint16
+	RoomNum string
 	Class   string
 	TimeNo  string
 	Teacher string
