@@ -6,7 +6,7 @@ import (
 
 type Teacher struct {
 	gorm.Model
-	TeacherNo uint16 `gorm:"primaryKey"`
+	TeacherNo uint16
 	Name      string
 	PerNo     uint8
 }

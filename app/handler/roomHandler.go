@@ -38,28 +38,28 @@ func GetRoomInfo(c *gin.Context) {
 	}
 
 	fmt.Println("teachersテーブル")
-	for i, v := range teachers {
-		fmt.Printf("%v回目\n", i)
-		fmt.Printf("%v, %v\n", v.TeacherNo, v.Name)
+	for _, v := range teachers {
+		fmt.Printf("-----------------------------")
+		fmt.Printf("%v, %v, %v\n", v.TeacherNo, v.Name, v.PerNo)
 	}
 
-	fmt.Println("teachersテーブル")
-	for i, v := range timetables {
-		fmt.Printf("%v回目\n", i)
-		fmt.Printf("%v, %v\n", v.No, v.TimeNo)
+	fmt.Println("timetableテーブル")
+	for _, v := range timetables {
+		fmt.Println("-------------------------")
+		fmt.Printf("%v, %v, %v, %v, %v, %v, %v\n", v.No, v.Class, v.RoomNo, v.Name, v.Youbi, v.TeacherNo, v.TimeNo)
 	}
 
-	roomResult := []model.RoomResult{}
-	result := db.Model(timetables).
+	roomResults := []model.RoomResult{}
+	result := db.Table("teachers").
 		Select("timetables.room_no, timetables.class, timetables.time_no, teachers.name, timetables.name").
-		Joins("left join teachers on teachers.teacher_no = timetables.teacher_no").Scan(&model.RoomResult{})
+		Joins("left join timetables on teachers.teacher_no = timetables.teacher_no").Scan(&roomResults)
 
 	if result.Error != nil {
 		c.JSON(http.StatusConflict, gin.H{"status": 400})
 		return
 	}
 
-	for i, v := range roomResult {
+	for i, v := range roomResults {
 		fmt.Printf("%v回目\n", i)
 		fmt.Printf("%v, %v, %v, %v, %v\n", v.RoomNum, v.Class, v.TimeNo, v.Teacher, v.Subject)
 	}
