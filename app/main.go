@@ -21,6 +21,11 @@ func main() {
 
 	}
 
+	room := router.Group("/room")
+	{
+		room.GET("/:roomNo", handler.GetRoomInfo)
+	}
+
 	router.Run(":3000")
 
 }
