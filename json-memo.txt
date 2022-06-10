@@ -23,26 +23,21 @@
     "token" : "string",
     "room_info": {
 
-        "1203":{
-            "1限目":{
-                "class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習",
-            },
-            "2限目":{
-                "class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習",
-            },
-            "3限目":{},
+        "1203":[
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"1限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"2限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"3限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"4限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"5限目"},
+        ],
+        "1204":[
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"1限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"2限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"3限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"4限目"},
+            {"class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習", "timeNo":"5限目"},
+        ],
 
-        },
-        "1204":{
-            "1限目":{
-                "class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習",
-            },
-            "2限目":{
-                "class":"IE4A", "teacher":"内山先生", "subject":"　システム開発演習",
-            },
-
-
-        },
     }
 }
 
