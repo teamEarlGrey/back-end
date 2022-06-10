@@ -66,11 +66,3 @@ func GetRoomInfo(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": buildingNumAndFloor})
 }
-
-func createJson(roomInfos []model.RoomResult) {
-	for _, v := range roomInfos {
-		fmt.Println("-------------------------------------------------------------------")
-		fmt.Printf("%v, %v, %v, %v, %v\n", v.RoomNo, v.Class, v.TimeNo, v.TeacherName, v.SubjectName)
-	}
-
-}
