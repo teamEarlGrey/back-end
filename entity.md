@@ -6,7 +6,7 @@ earlGray
 
 ## テーブル
 
-update_at, create_at, delete_atはすべてのテーブルに存在する。
+updated_at, created_at, deleted_atはすべてのテーブルに存在する。
 
 データ型：datetime
 
@@ -96,7 +96,7 @@ update_at, create_at, delete_atはすべてのテーブルに存在する。
     - DELETE：CASCADE, UPDATE：CASCADE
   - 予約の状態を表す（予約権限を持った先生が承認したかどうか）
 
-### timer(時間)
+### timers(時間)
 ※何限目と決まっている時間のみ(時間割作成で使用する)
 - time_no
   - char(3)
