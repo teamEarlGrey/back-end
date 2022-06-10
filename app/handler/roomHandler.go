@@ -46,12 +46,12 @@ func GetRoomInfo(c *gin.Context) {
 	fmt.Println("timetableテーブル")
 	for _, v := range timetables {
 		fmt.Println("-------------------------")
-		fmt.Printf("%v, %v, %v, %v, %v, %v, %v\n", v.No, v.Class, v.RoomNo, v.SubjectName, v.Youbi, v.TeacherNo, v.TimeNo)
+		fmt.Printf("%v, %v, %v, %v, %v, %v\n", v.No, v.RoomNo, v.SubjectName, v.Youbi, v.TeacherNo, v.TimeNo)
 	}
 
 	roomResults := []model.RoomResult{}
 	result := db.Table("timetables").
-		Select("timetables.room_no, timetables.class, timetables.time_no, teachers.teacher_name, timetables.subject_name").
+		Select("timetables.room_no, timetables.time_no, teachers.teacher_name, timetables.subject_name").
 		Joins("left join teachers on timetables.teacher_no = teachers.teacher_no").Scan(&roomResults)
 
 	if result.Error != nil {
@@ -61,7 +61,7 @@ func GetRoomInfo(c *gin.Context) {
 	fmt.Println("結合後のテーブル")
 	for _, v := range roomResults {
 		fmt.Println("-------------------------------------------------------------------")
-		fmt.Printf("%v, %v, %v, %v, %v\n", v.RoomNo, v.Class, v.TimeNo, v.TeacherName, v.SubjectName)
+		fmt.Printf("%v, %v, %v, %v\n", v.RoomNo, v.TimeNo, v.TeacherName, v.SubjectName)
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": buildingNumAndFloor})
