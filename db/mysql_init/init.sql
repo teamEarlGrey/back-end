@@ -2,19 +2,19 @@ CREATE DATABASE IF NOT EXISTS earlGrey;
 use earlGrey;
 
 --何限目の情報を格納している
-CREATE TABLE timer(
+CREATE TABLE timers(
 	time_no char(3) not null,
 	s_time char(5) not null,
 	e_time char(5)not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(time_no)
 );
 
 --data
-INSERT INTO timer(time_no, s_time, e_time)
+INSERT INTO timers(time_no, s_time, e_time)
   VALUES("1限目", "09:15", "10:45"),
         ("2限目", "11:00", "12:30"),
         ("3限目", "13:30", "15:00"),
@@ -25,9 +25,9 @@ INSERT INTO timer(time_no, s_time, e_time)
 CREATE TABLE permission(
 	per_no int auto_increment,
 	permission char(2) not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(per_no)
 );
@@ -42,12 +42,12 @@ CREATE TABLE teachers(
 	teacher_no int auto_increment,
 	teacher_name varchar(20) not null,
 	per_no int not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(teacherNo),
-	foreign key(per_no) references permission(per_no)
+	foreign key(per_no) references permission(per_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --sampel data
@@ -62,9 +62,9 @@ INSERT INTO teachers(name, perNo)
 CREATE TABLE state(
 	state_no int auto_increment,
 	state_name char(4) not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(state_no)
 );
@@ -79,9 +79,9 @@ INSERT INTO state(state_name)
 CREATE TABLE rooms(
 	room_no char(4),
 	memo varchar(255),
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(room_no)
 );
@@ -106,14 +106,14 @@ CREATE TABLE timetable(
 	youbi char(3) not null,
 	teacher_no int not null,
 	time_no char(3) not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(No),
-	foreign key(room_no) references rooms(room_no),
-	foreign key(teacher_no) references teachers(teacher_no),
-	foreign key(time_no) references timer(time_no)
+	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(time_no) references timers(time_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --sample data
@@ -147,14 +147,14 @@ CREATE TABLE reservation(
 	purpose varchar(150) not null,
 	request_date date not null,
 	state_no int not null,
-	update_at datetime,
-	create_at datetime,
-	delete_at datetime,
+	updated_at datetime,
+	created_at datetime,
+	deleted_at datetime,
 
 	primary key(rese_no),
-	foreign key(teacher_no) references teachers(teacher_no),
-	foreign key(room_no) references rooms(room_no),
-	foreign key(state_no) references state(state_no)
+	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(state_no) references state(state_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --sample data
