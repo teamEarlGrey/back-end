@@ -1,7 +1,7 @@
 CREATE DATABASE IF NOT EXISTS earlGrey;
 use earlGrey;
 
---何限目の情報を格納している
+-- 何限目の情報を格納している
 CREATE TABLE timers(
 	time_no char(3) not null,
 	s_time char(5) not null,
@@ -13,7 +13,7 @@ CREATE TABLE timers(
 	primary key(time_no)
 );
 
---data
+-- data
 INSERT INTO timers(time_no, s_time, e_time)
   VALUES("1限目", "09:15", "10:45"),
         ("2限目", "11:00", "12:30"),
@@ -21,8 +21,8 @@ INSERT INTO timers(time_no, s_time, e_time)
         ("4限目", "15:15", "16:45"),
         ("5限目", "17:00", "18:30");
 
---先生たちの権限情報
-CREATE TABLE permission(
+-- 先生たちの権限情報
+CREATE TABLE permissions(
 	per_no int auto_increment,
 	permission char(2) not null,
 	updated_at datetime,
@@ -32,12 +32,12 @@ CREATE TABLE permission(
 	primary key(per_no)
 );
 
---data
-INSERT INTO permission(permission)
+-- data
+INSERT INTO permissions(permission)
   VALUES("予約"),
         ("申請");
 
---先生の情報
+-- 先生の情報
 CREATE TABLE teachers(
 	teacher_no int auto_increment,
 	teacher_name varchar(20) not null,
@@ -46,20 +46,20 @@ CREATE TABLE teachers(
 	created_at datetime,
 	deleted_at datetime,
 
-	primary key(teacherNo),
-	foreign key(per_no) references permission(per_no) ON DELETE CASCADE ON UPDATE CASCADE
+	primary key(teacher_no),
+	foreign key(per_no) references permissions(per_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
---sampel data
-INSERT INTO teachers(name, perNo)
+-- sampel data
+INSERT INTO teachers(name, per_no)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
-        ("小戎冴茄", 2)
-				("杉原宏", 1),
-				("上村香代子", 1);
+        ("小戎冴茄", 2),
+		("杉原宏", 1),
+		("上村香代子", 1);
 
---予約申請の状態を格納している（承認など）
-CREATE TABLE state(
+-- 予約申請の状態を格納している（承認など）
+CREATE TABLE states(
 	state_no int auto_increment,
 	state_name char(4) not null,
 	updated_at datetime,
@@ -69,13 +69,13 @@ CREATE TABLE state(
 	primary key(state_no)
 );
 
---data
+-- data
 INSERT INTO state(state_name)
   VALUES("承認済み"),
         ("承認待ち"),
         ("否認");
 
---教室の情報
+-- 教室の情報
 CREATE TABLE rooms(
 	room_no char(4),
 	memo varchar(255),
@@ -86,7 +86,7 @@ CREATE TABLE rooms(
 	primary key(room_no)
 );
 
---data
+-- data
 INSERT INTO rooms(room_no, memo)
   VALUES("1204", "コンセントプラグ：床"),
         ("1205", "コンセントプラグ：床"),
@@ -98,9 +98,10 @@ INSERT INTO rooms(room_no, memo)
 				("4203", "コンセントプラグ：床");
 
 
---時間割り
-CREATE TABLE timetable(
+-- 時間割り
+CREATE TABLE timetables(
 	No int auto_increment,
+	class char(5) not null,
 	room_no char(4) not null,
 	subject_name varchar(40) not null,
 	youbi char(3) not null,
@@ -116,7 +117,7 @@ CREATE TABLE timetable(
 	foreign key(time_no) references timers(time_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
---sample data
+-- sample data
 INSERT INTO timetable(room_no, name, youbi, teacher_no, time_no)
   VALUES("4301", "セキュリティ演習_A", "Mon", 1, "1限目"),
 				("4301", "セキュリティ演習_A", "Mon", 1, "2限目"),
@@ -136,8 +137,8 @@ INSERT INTO timetable(room_no, name, youbi, teacher_no, time_no)
 				("3301", "ハイプロフェッショナルゼミ", "Fri", 1, "5限目");
 
 
---予約
-CREATE TABLE reservation(
+-- 予約
+CREATE TABLE reservations(
 	rese_no int auto_increment,
 	teacher_no int not null,
 	room_no char(4) not null,
@@ -157,6 +158,6 @@ CREATE TABLE reservation(
 	foreign key(state_no) references state(state_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
---sample data
-INSERT INTO reservation(teacher_no, room_no, rese_date, s_time, e_time, purpose, request_date, state_no)
+-- sample data
+INSERT INTO reservations(teacher_no, room_no, rese_date, s_time, e_time, purpose, request_date, state_no)
   VALUES(1, "1204", "2022-06-01", "12:00", "13:00", "面談", "2022-05-27", 2);
