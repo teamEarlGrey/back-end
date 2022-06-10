@@ -1,4 +1,4 @@
-PUT  http://localhost:3000/user/reg/
+PUT  http://localhost:4000/user/reg/
 content-type: application/json
 
 {
@@ -7,7 +7,7 @@ content-type: application/json
 
 ###
 
-POST  http://localhost:3000/user/login/
+POST  http://localhost:4000/user/login/
 content-type: application/json
 
 {
@@ -17,7 +17,7 @@ content-type: application/json
 ###
 
 
-PUT  http://localhost:3000/user/update/
+PUT  http://localhost:4000/user/update/
 content-type: application/json
 
 {
@@ -26,7 +26,7 @@ content-type: application/json
 
 ###
 
-DELETE http://localhost:3000/user/delete/
+DELETE http://localhost:4000/user/delete/
 Content-Type: application/json
 
 {
@@ -34,12 +34,12 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/user/get/
+GET http://localhost:4000/user/get/
 Content-Type: application/json
 
 ###
 
-POST http://localhost:3000/user/validate/
+POST http://localhost:4000/user/validate/
 Content-Type: application/json
 
 {
