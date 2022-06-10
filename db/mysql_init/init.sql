@@ -118,7 +118,7 @@ CREATE TABLE timetables(
 
 -- sample data
 INSERT INTO timetables(class, room_no, subject_name, youbi, teacher_no, time_no)
-	VALUES("IE4A", "1205", "システム開発演習５", "Fri", 1, "3限目"),
+  VALUES("IE4A", "1205", "システム開発演習５", "Fri", 1, "3限目"),
         ("IE4A", "1205", "システム開発演習５", "Fri", 1, "4限目");
 
 -- 予約
