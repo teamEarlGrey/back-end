@@ -7,7 +7,6 @@ import (
 type Timetable struct {
 	gorm.Model
 	No          uint16 `gorm:"primaryKey"`
-	Class       string
 	RoomNo      string
 	SubjectName string
 	Youbi       string

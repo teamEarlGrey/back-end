@@ -101,7 +101,6 @@ INSERT INTO rooms(room_no, memo)
 -- 時間割り
 CREATE TABLE timetables(
 	No int auto_increment,
-	class char(5) not null,
 	room_no char(4) not null,
 	subject_name varchar(40) not null,
 	youbi char(3) not null,
