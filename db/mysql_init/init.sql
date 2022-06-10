@@ -97,8 +97,6 @@ INSERT INTO rooms(room_no, memo)
 		("4203", "コンセントプラグ：床"),
         ("2031", "コンセントプラグ：机の上, ネットワーク機器あり");
 
-
-
 -- 時間割り
 CREATE TABLE timetables(
 	No int auto_increment,
@@ -122,7 +120,6 @@ CREATE TABLE timetables(
 INSERT INTO timetables(class, room_no, subject_name, youbi, teacher_no, time_no)
 	VALUES("IE4A", "1205", "システム開発演習５", "Fri", 1, "3限目"),
         ("IE4A", "1205", "システム開発演習５", "Fri", 1, "4限目");
-
 
 -- 予約
 CREATE TABLE reservations(
