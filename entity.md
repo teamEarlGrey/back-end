@@ -17,18 +17,14 @@ update_at, create_at, delete_atはすべてのテーブルに存在する。
   - auto_increment
   - 時間割を特定するための値
 
-- class
-  - char(5)
-  - not null
-  - クラスを指定
-
-- roomNo
+- room_no
   - char(4)
   - not null
   - foreign key：rooms表のroomNo
+    - DELETE：CASCADE, UPDATE：CASCADE
   - 教室の番号
 
-- name
+- subject_name
   - varchar(40)
   - not null
   - 授業名
@@ -39,45 +35,49 @@ update_at, create_at, delete_atはすべてのテーブルに存在する。
   - 曜日
   - 書き方：英語表記の先頭3文字(例->Mon)
 
-- teacherNo
+- teacher_no
   - int
   - not null
   - foreign key：teachers表のteacherNo
+    - DELETE：CASCADE, UPDATE：CASCADE
   - 先生の番号
 
-- timeNo
+- time_no
   - char(3)
   - not null
   - foreign key：timer表のtimeNo
+    - DELETE：CASCADE, UPDATE：CASCADE
   - ○限目の表示
 
 ### reservation(予約)
 
-- reseNo
+- rese_no
   - primary key
   - int
   - auto_increment
   - 予約を特定するための値
 
-- teacherNo
+- teacher_no
   - int
   - not null
   - foreign key：teachers表のteacherNo
+    - DELETE：CASCADE, UPDATE：CASCADE
   - 予約申請した先生
-- roomNo
+- room_no
   - char(4)
   - not null
   - foreign key：rooms表のroomNo
+    - DELETE：CASCADE, UPDATE：CASCADE
   - 予約したい教室番号
-- reseDate
+- rese_date
   - date
   - not null
   - 予約したい日程
-- sTime
+- s_time
   - time
   - not null
   - 開始時間
-- eTime
+- e_time
   - time
   - not null
   - 終了時間
@@ -85,34 +85,35 @@ update_at, create_at, delete_atはすべてのテーブルに存在する。
   - varchar(150)
   - not null
   - 予約理由
-- requestDate
+- request_date
     - date
     - not null
     - 予約申請をした日時
-- stateNo
+- state_no
   - int
   - not null
   - foreign key：state表のstateNo
+    - DELETE：CASCADE, UPDATE：CASCADE
   - 予約の状態を表す（予約権限を持った先生が承認したかどうか）
 
 ### timer(時間)
 ※何限目と決まっている時間のみ(時間割作成で使用する)
-- timeNo
+- time_no
   - char(3)
   - not null
   - ○限目
-- sTime
+- s_time
   - char(5)
   - not null
   - 開始時間
-- eTime
+- e_time
   - char(5)
   - not null
   - 終了時間
 
 ### permission(権限)
 ※先生が予約する時の権限
-- perNo
+- per_no
   - primary key
   - int
   - auto_increment
@@ -123,34 +124,35 @@ update_at, create_at, delete_atはすべてのテーブルに存在する。
   - 権限
 
 ### teachers(先生)
-- teacherNo
+- teacher_no
   - primary key
   - int
   - auto_increment
   - 先生を特定するための値
-- name
+- teacher_name
   - varchar(20)
   - not null
   - 先生の名前
-- perNo
+- per_no
   - int
   - not null
   - foreign key：parmission表のperNo
+    - DELETE：CASCADE, UPDATE：CASCADE
   - 先生の権限を表す
 
 ### state(予約申請の状態)
-- stateNo
+- state_no
   - primary key
   - int
   - auto_increment
   - 予約申請の状態を特定するための値
-- stateName
+- state_name
   - char(4)
   - not null
   - 申請の状態
 
 ### rooms(教室)
-- roomNo
+- room_no
   - primary key
   - char(4)
   - 教室番号
