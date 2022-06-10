@@ -21,7 +21,7 @@ INSERT INTO timers(time_no, s_time, e_time)
         ("4限目", "15:15", "16:45"),
         ("5限目", "17:00", "18:30");
 
--- 先生たちの権限情報
+--先生たちの権限情報
 CREATE TABLE permissions(
 	per_no int auto_increment,
 	permission char(2) not null,
@@ -155,7 +155,7 @@ CREATE TABLE reservations(
 	primary key(rese_no),
 	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
-	foreign key(state_no) references state(state_no) ON DELETE CASCADE ON UPDATE CASCADE
+	foreign key(state_no) references states(state_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- sample data
