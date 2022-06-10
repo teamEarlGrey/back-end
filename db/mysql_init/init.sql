@@ -22,7 +22,7 @@ INSERT INTO timers(time_no, s_time, e_time)
         ("5限目", "17:00", "18:30");
 
 --先生たちの権限情報
-CREATE TABLE permission(
+CREATE TABLE permissions(
 	per_no int auto_increment,
 	permission char(2) not null,
 	updated_at datetime,
@@ -33,7 +33,7 @@ CREATE TABLE permission(
 );
 
 --data
-INSERT INTO permission(permission)
+INSERT INTO permissions(permission)
   VALUES("予約"),
         ("申請");
 
@@ -47,7 +47,7 @@ CREATE TABLE teachers(
 	deleted_at datetime,
 
 	primary key(teacher_no),
-	foreign key(per_no) references permission(per_no) ON DELETE CASCADE ON UPDATE CASCADE
+	foreign key(per_no) references permissions(per_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --sampel data
@@ -59,7 +59,7 @@ INSERT INTO teachers(teacher_name, perNo)
 				("上村香代子", 1);
 
 --予約申請の状態を格納している（承認など）
-CREATE TABLE state(
+CREATE TABLE states(
 	state_no int auto_increment,
 	state_name char(4) not null,
 	updated_at datetime,
@@ -70,7 +70,7 @@ CREATE TABLE state(
 );
 
 --data
-INSERT INTO state(state_name)
+INSERT INTO states(state_name)
   VALUES("承認済み"),
         ("承認待ち"),
         ("否認");
@@ -99,7 +99,7 @@ INSERT INTO rooms(room_no, memo)
 
 
 --時間割り
-CREATE TABLE timetable(
+CREATE TABLE timetables(
 	No int auto_increment,
 	room_no char(4) not null,
 	subject_name varchar(40) not null,
@@ -117,7 +117,7 @@ CREATE TABLE timetable(
 );
 
 --sample data
-INSERT INTO timetable(room_no, subject_name, youbi, teacher_no, time_no)
+INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
   VALUES("4301", "セキュリティ演習_A", "Mon", 1, "1限目"),
 				("4301", "セキュリティ演習_A", "Mon", 1, "2限目"),
 				("1205", "ITシステム開発演習V", "Tue", 1, "1限目"),
@@ -137,7 +137,7 @@ INSERT INTO timetable(room_no, subject_name, youbi, teacher_no, time_no)
 
 
 --予約
-CREATE TABLE reservation(
+CREATE TABLE reservations(
 	rese_no int auto_increment,
 	teacher_no int not null,
 	room_no char(4) not null,
@@ -154,9 +154,9 @@ CREATE TABLE reservation(
 	primary key(rese_no),
 	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
-	foreign key(state_no) references state(state_no) ON DELETE CASCADE ON UPDATE CASCADE
+	foreign key(state_no) references states(state_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --sample data
-INSERT INTO reservation(teacher_no, room_no, rese_date, s_time, e_time, purpose, request_date, state_no)
+INSERT INTO reservations(teacher_no, room_no, rese_date, s_time, e_time, purpose, request_date, state_no)
   VALUES(1, "1204", "2022-06-01", "12:00", "13:00", "面談", "2022-05-27", 2);
