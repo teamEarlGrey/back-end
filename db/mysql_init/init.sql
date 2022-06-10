@@ -47,7 +47,7 @@ CREATE TABLE teachers(
 	delete_at datetime,
 
 	primary key(teacherNo),
-	foreign key(perNo) references permission(perNo)
+	foreign key(perNo) references permission(perNo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- sampel data
@@ -104,9 +104,9 @@ CREATE TABLE timetable(
 	delete_at datetime,
 
 	primary key(No),
-	foreign key(roomNo) references rooms(roomNo),
-	foreign key(teacherNo) references teachers(teacherNo),
-	foreign key(timeNo) references timer(timeNo)
+	foreign key(roomNo) references rooms(roomNo) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(teacherNo) references teachers(teacherNo) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(timeNo) references timer(timeNo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- sample data
@@ -130,9 +130,9 @@ CREATE TABLE reservation(
 	delete_at datetime,
 
 	primary key(reseNo),
-	foreign key(teacherNo) references teachers(teacherNo),
-	foreign key(roomNo) references rooms(roomNo),
-	foreign key(stateNo) references state(stateNo)
+	foreign key(teacherNo) references teachers(teacherNo) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(roomNo) references rooms(roomNo) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(stateNo) references state(stateNo) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- sample data
