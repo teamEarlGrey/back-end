@@ -47,7 +47,8 @@ CREATE TABLE teachers(
 	deleted_at datetime,
 
 	primary key(teacher_no),
-	foreign key(per_no) references permissions(per_no)
+	foreign key(per_no) references permissions(per_no) ON DELETE CASCADE ON UPDATE CASCADE
+
 );
 
 -- sampel data
@@ -111,15 +112,30 @@ CREATE TABLE timetables(
 	deleted_at datetime,
 
 	primary key(No),
-	foreign key(room_no) references rooms(room_no),
-	foreign key(teacher_no) references teachers(teacher_no),
-	foreign key(time_no) references timers(time_no)
+	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(time_no) references timers(time_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- sample data
-INSERT INTO timetables(class, room_no, subject_name, youbi, teacher_no, time_no)
-  VALUES("IE4A", "1205", "システム開発演習５", "Fri", 1, "3限目"),
-        ("IE4A", "1205", "システム開発演習５", "Fri", 1, "4限目");
+INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
+  VALUES("4301", "セキュリティ演習_A", "Mon", 1, "1限目"),
+				("4301", "セキュリティ演習_A", "Mon", 1, "2限目"),
+				("1205", "ITシステム開発演習V", "Tue", 1, "1限目"),
+				("1205", "ITシステム開発演習V", "Tue", 1, "2限目"),
+				("2301", "ITゼミ演習", "Tue", 1, "3限目"),
+				("2301", "ITゼミ演習", "Tue", 1, "4限目"),
+				("3301", "就職対策", "Wed", 5, "3限目"),
+				("2302", "システム設計演習", "Wed", 4, "3限目"),
+				("2302", "システム設計演習", "Wed", 4, "4限目"),
+				("2301", "ITゼミ演習", "Thu", 2, "1限目"),
+				("2301", "ITゼミ演習", "Thu", 2, "2限目"),
+				("4203", "AIシステム開発演習", "Thu", 2, "3限目"),
+				("4203", "AIシステム開発演習", "Thu", 2, "4限目"),
+				("1205", "ITシステム開発演習V", "Fri", 1, "3限目"),
+        		("1205", "ITシステム開発演習V", "Fri", 1, "4限目"),
+				("3301", "ハイプロフェッショナルゼミ", "Fri", 1, "5限目");
+
 
 -- 予約
 CREATE TABLE reservations(
@@ -137,9 +153,9 @@ CREATE TABLE reservations(
 	deleted_at datetime,
 
 	primary key(rese_no),
-	foreign key(teacher_no) references teachers(teacher_no),
-	foreign key(room_no) references rooms(room_no),
-	foreign key(state_no) references states(state_no)
+	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(state_no) references states(state_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- sample data
