@@ -21,7 +21,7 @@ INSERT INTO timers(time_no, s_time, e_time)
         ("4限目", "15:15", "16:45"),
         ("5限目", "17:00", "18:30");
 
---先生たちの権限情報
+-- 先生たちの権限情報
 CREATE TABLE permissions(
 	per_no int auto_increment,
 	permission char(2) not null,
@@ -51,7 +51,7 @@ CREATE TABLE teachers(
 );
 
 -- sampel data
-INSERT INTO teachers(name, per_no)
+INSERT INTO teachers(teacher_name, per_no)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
         ("小戎冴茄", 2),
@@ -70,7 +70,7 @@ CREATE TABLE states(
 );
 
 -- data
-INSERT INTO state(state_name)
+INSERT INTO states(state_name)
   VALUES("承認済み"),
         ("承認待ち"),
         ("否認");
@@ -118,7 +118,7 @@ CREATE TABLE timetables(
 );
 
 -- sample data
-INSERT INTO timetable(room_no, name, youbi, teacher_no, time_no)
+INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
   VALUES("4301", "セキュリティ演習_A", "Mon", 1, "1限目"),
 				("4301", "セキュリティ演習_A", "Mon", 1, "2限目"),
 				("1205", "ITシステム開発演習V", "Tue", 1, "1限目"),
