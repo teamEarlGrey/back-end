@@ -50,7 +50,7 @@ func GetRoomInfo(c *gin.Context) {
 	}
 
 	roomResults := []model.RoomResult{}
-	result := db.Table("timetables").
+	result := db.Order("timetables.room_no, timetables.time_no").Table("timetables").
 		Select("timetables.room_no, timetables.time_no, teachers.teacher_name, timetables.subject_name").
 		Joins("left join teachers on timetables.teacher_no = teachers.teacher_no").Scan(&roomResults)
 

@@ -78,7 +78,7 @@ INSERT INTO states(state_name)
 
 -- 教室の情報
 CREATE TABLE rooms(
-	room_no char(4),
+	room_no int(4),
 	memo varchar(255),
 	updated_at datetime,
 	created_at datetime,
@@ -89,19 +89,19 @@ CREATE TABLE rooms(
 
 -- data
 INSERT INTO rooms(room_no, memo)
-  VALUES("1204", "コンセントプラグ：床"),
-        ("1205", "コンセントプラグ：床"),
-		("2301", "コンセントプラグ：机の上, ネットワーク機器あり"),
-		("4301", "コンセントプラグ：床"),
-		("3301", "コンセントプラグ：机の横"),
-		("2302", "コンセントプラグ：机の上"),
-		("4203", "コンセントプラグ：床"),
-        ("2031", "コンセントプラグ：机の上, ネットワーク機器あり");
+  VALUES(1204, "コンセントプラグ：床"),
+        (1205, "コンセントプラグ：床"),
+		(2301, "コンセントプラグ：机の上, ネットワーク機器あり"),
+		(4301, "コンセントプラグ：床"),
+		(3301, "コンセントプラグ：机の横"),
+		(2302, "コンセントプラグ：机の上"),
+		(4203, "コンセントプラグ：床"),
+        (2031, "コンセントプラグ：机の上, ネットワーク機器あり");
 
 -- 時間割り
 CREATE TABLE timetables(
 	No int auto_increment,
-	room_no char(4) not null,
+	room_no int(4) not null,
 	subject_name varchar(40) not null,
 	youbi char(3) not null,
 	teacher_no int not null,
@@ -118,29 +118,29 @@ CREATE TABLE timetables(
 
 -- sample data
 INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
-  VALUES("4301", "セキュリティ演習_A", "Mon", 1, "1限目"),
-				("4301", "セキュリティ演習_A", "Mon", 1, "2限目"),
-				("1205", "ITシステム開発演習V", "Tue", 1, "1限目"),
-				("1205", "ITシステム開発演習V", "Tue", 1, "2限目"),
-				("2301", "ITゼミ演習", "Tue", 1, "3限目"),
-				("2301", "ITゼミ演習", "Tue", 1, "4限目"),
-				("3301", "就職対策", "Wed", 5, "3限目"),
-				("2302", "システム設計演習", "Wed", 4, "3限目"),
-				("2302", "システム設計演習", "Wed", 4, "4限目"),
-				("2301", "ITゼミ演習", "Thu", 2, "1限目"),
-				("2301", "ITゼミ演習", "Thu", 2, "2限目"),
-				("4203", "AIシステム開発演習", "Thu", 2, "3限目"),
-				("4203", "AIシステム開発演習", "Thu", 2, "4限目"),
-				("1205", "ITシステム開発演習V", "Fri", 1, "3限目"),
-        		("1205", "ITシステム開発演習V", "Fri", 1, "4限目"),
-				("3301", "ハイプロフェッショナルゼミ", "Fri", 1, "5限目");
+  VALUES(4301, "セキュリティ演習_A", "Mon", 1, "1限目"),
+				(4301, "セキュリティ演習_A", "Mon", 1, "2限目"),
+				(1205, "ITシステム開発演習V", "Tue", 1, "1限目"),
+				(1205, "ITシステム開発演習V", "Tue", 1, "2限目"),
+				(2301, "ITゼミ演習", "Tue", 1, "3限目"),
+				(2301, "ITゼミ演習", "Tue", 1, "4限目"),
+				(3301, "就職対策", "Wed", 5, "3限目"),
+				(2302, "システム設計演習", "Wed", 4, "3限目"),
+				(2302, "システム設計演習", "Wed", 4, "4限目"),
+				(2301, "ITゼミ演習", "Thu", 2, "1限目"),
+				(2301, "ITゼミ演習", "Thu", 2, "2限目"),
+				(4203, "AIシステム開発演習", "Thu", 2, "3限目"),
+				(4203, "AIシステム開発演習", "Thu", 2, "4限目"),
+				(1205, "ITシステム開発演習V", "Fri", 1, "3限目"),
+        		(1205, "ITシステム開発演習V", "Fri", 1, "4限目"),
+				(3301, "ハイプロフェッショナルゼミ", "Fri", 1, "5限目");
 
 
 -- 予約
 CREATE TABLE reservations(
 	rese_no int auto_increment,
 	teacher_no int not null,
-	room_no char(4) not null,
+	room_no int(4) not null,
 	rese_date date not null,
 	s_time time not null,
 	e_time time not null,
@@ -159,4 +159,4 @@ CREATE TABLE reservations(
 
 -- sample data
 INSERT INTO reservations(teacher_no, room_no, rese_date, s_time, e_time, purpose, request_date, state_no)
-  VALUES(1, "1204", "2022-06-01", "12:00", "13:00", "面談", "2022-05-27", 2);
+  VALUES(1, 1204, "2022-06-01", "12:00", "13:00", "面談", "2022-05-27", 2);
