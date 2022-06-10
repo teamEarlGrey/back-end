@@ -46,12 +46,12 @@ CREATE TABLE teachers(
 	created_at datetime,
 	deleted_at datetime,
 
-	primary key(teacherNo),
+	primary key(teacher_no),
 	foreign key(per_no) references permission(per_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --sampel data
-INSERT INTO teachers(name, perNo)
+INSERT INTO teachers(teacher_name, perNo)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
         ("小戎冴茄", 2)
@@ -117,7 +117,7 @@ CREATE TABLE timetable(
 );
 
 --sample data
-INSERT INTO timetable(room_no, name, youbi, teacher_no, time_no)
+INSERT INTO timetable(room_no, subject_name, youbi, teacher_no, time_no)
   VALUES("4301", "セキュリティ演習_A", "Mon", 1, "1限目"),
 				("4301", "セキュリティ演習_A", "Mon", 1, "2限目"),
 				("1205", "ITシステム開発演習V", "Tue", 1, "1限目"),
