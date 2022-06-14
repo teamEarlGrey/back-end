@@ -54,8 +54,8 @@ CREATE TABLE teachers(
 INSERT INTO teachers(teacher_name, per_no)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
-				 ("杉原宏", 1),
-				 ("上村香代子", 1),
+		("杉原宏", 1),
+		("上村香代子", 1),
 		("小戎冴茄", 2);
 
 INSERT INTO teachers(teacher_name, per_no)
