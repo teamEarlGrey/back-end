@@ -54,9 +54,9 @@ CREATE TABLE teachers(
 INSERT INTO teachers(teacher_name, per_no)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
-        ("小戎冴茄", 2),
 				("杉原宏", 1),
-				("上村香代子", 1);
+				("上村香代子", 1),
+		("小戎冴茄", 2),
 
 INSERT INTO teachers(teacher_name, per_no)
 	VALUES("山本太", 1),
@@ -97,12 +97,12 @@ CREATE TABLE rooms(
 INSERT INTO rooms(room_no, memo)
   VALUES("1204", "コンセントプラグ：床"),
         ("1205", "コンセントプラグ：床"),
-        ("2031", "コンセントプラグ：机の上, ネットワーク機器あり"),
 				("2301", "コンセントプラグ：机の上, ネットワーク機器あり"),
 				("4301", "コンセントプラグ：床"),
 				("3301", "コンセントプラグ：机の横"),
 				("2302", "コンセントプラグ：机の上"),
-				("4203", "コンセントプラグ：床");
+				("4203", "コンセントプラグ：床"),
+		("2031", "コンセントプラグ：机の上, ネットワーク機器あり"),
 
 INSERT INTO rooms(room_no, memo)
 	VALUES("2405", "コンセントプラグ：机の横"),
@@ -146,7 +146,7 @@ INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
 				("4203", "AIシステム開発演習Ⅰ", "Thu", 2, "3限目"),
 				("4203", "AIシステム開発演習Ⅰ", "Thu", 2, "4限目"),
 				("1205", "ITシステム開発演習Ⅴ", "Fri", 1, "3限目"),
-        ("1205", "ITシステム開発演習Ⅴ", "Fri", 1, "4限目"),
+        		("1205", "ITシステム開発演習Ⅴ", "Fri", 1, "4限目"),
 				("3301", "ハイプロフェッショナルゼミ_IT", "Fri", 1, "5限目");
 
 INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
