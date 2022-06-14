@@ -59,6 +59,13 @@ INSERT INTO teachers(teacher_name, per_no)
 		("上村香代子", 1),
         ("小戎冴茄", 2);
 
+INSERT INTO teachers(teacher_name, per_no)
+	VALUES("山本太", 1),
+			("加藤昌", 1),
+			("石田雄太", 1),
+			("小出操", 1),
+			("曽根国雄", 2);
+
 -- 予約申請の状態を格納している（承認など）
 CREATE TABLE states(
 	state_no int auto_increment,
@@ -98,6 +105,14 @@ INSERT INTO rooms(room_no, memo)
 		(4203, "コンセントプラグ：床"),
         (2031, "コンセントプラグ：机の上, ネットワーク機器あり");
 
+
+INSERT INTO rooms(room_no, memo)
+	VALUES("2405", "コンセントプラグ：机の横"),
+		  ("2402", "コンセントプラグ：床"),
+		  ("3502", "コンセントプラグ：机の上"),
+		  ("1403", "コンセントプラグ：机の上"),
+		  ("4202", "コンセントプラグ：床");
+
 -- 時間割り
 CREATE TABLE timetables(
 	No int auto_increment,
@@ -134,6 +149,23 @@ INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
 				(1205, "ITシステム開発演習V", "Fri", 1, "3限目"),
         		(1205, "ITシステム開発演習V", "Fri", 1, "4限目"),
 				(3301, "ハイプロフェッショナルゼミ", "Fri", 1, "5限目");
+
+INSERT INTO timetables(room_no, subject_name, youbi, teacher_no, time_no)
+	VALUES("2405", "就職対策Ⅱ", "Mon", 6, "1限目"),
+		  ("4202", "セキュリティ演習_A", "Mon", 7, "2限目"),
+		  ("4202", "セキュリティ演習_A", "Mon", 7, "3限目"),
+		  ("1204", "ITシステム開発演習Ⅴ", "Tue", 1, "1限目"),
+		  ("1204", "ITシステム開発演習Ⅴ", "Tue", 1, "2限目"),
+		  ("3502", "ITゼミ演習Ⅲ", "Tue", 8, "3限目"),
+		  ("3502", "ITゼミ演習Ⅲ", "Tue", 8, "4限目"),
+		  ("2302", "システム設計演習", "Wed", 4, "1限目"),
+		  ("2302", "システム設計演習", "Wed", 4, "2限目"),
+		  ("3502", "ITゼミ演習Ⅲ", "Thu", 9, "3限目"),
+		  ("3502", "ITゼミ演習Ⅲ", "Thu", 9, "4限目"),
+		  ("1403", "AIシステム開発演習Ⅰ", "Fri", 2, "1限目"),
+		  ("1403", "AIシステム開発演習Ⅰ", "Fri", 2, "2限目"),
+		  ("1204", "ITシステム開発演習Ⅴ", "Tue", 1, "3限目"),
+		  ("1204", "ITシステム開発演習Ⅴ", "Tue", 1, "4限目");
 
 
 -- 予約
