@@ -56,7 +56,7 @@ INSERT INTO teachers(teacher_name, per_no)
         ("武次順平", 1),
 		("杉原宏", 1),
 		("上村香代子", 1),
-			("小戎冴茄", 2);
+			  ("小戎冴茄", 2);
 
 INSERT INTO teachers(teacher_name, per_no)
 	VALUES("山本太", 1),
