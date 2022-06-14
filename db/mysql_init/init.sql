@@ -54,9 +54,9 @@ CREATE TABLE teachers(
 INSERT INTO teachers(teacher_name, per_no)
   VALUES("内山豊彦", 1),
         ("武次順平", 1),
-				("杉原宏", 1),
-				("上村香代子", 1),
-		("小戎冴茄", 2),
+		("杉原宏", 1),
+		("上村香代子", 1),
+		("小戎冴茄", 2);
 
 INSERT INTO teachers(teacher_name, per_no)
 	VALUES("山本太", 1),
@@ -102,7 +102,7 @@ INSERT INTO rooms(room_no, memo)
 				("3301", "コンセントプラグ：机の横"),
 				("2302", "コンセントプラグ：机の上"),
 				("4203", "コンセントプラグ：床"),
-		("2031", "コンセントプラグ：机の上, ネットワーク機器あり"),
+		("2031", "コンセントプラグ：机の上, ネットワーク機器あり");
 
 INSERT INTO rooms(room_no, memo)
 	VALUES("2405", "コンセントプラグ：机の横"),
