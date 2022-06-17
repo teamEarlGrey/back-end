@@ -45,3 +45,6 @@ Content-Type: application/json
 {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6MywiTWFpbCI6InRlc3QyQGdtYWlsLmNvbSJ9.iwQ3J7a5x7RXRi0OaX_lnY17bN-qz4Vga6TuQfUSk0M"
 }
+
+###
+GET http://localhost:4000/room/1234/
