@@ -27,7 +27,17 @@ func GetRoomInfo(c *gin.Context) {
 	fmt.Println(buildingNumAndFloor)
 	buildingAndFloor := strconv.FormatInt(buildingNumAndFloor, 10)
 	buildingAndFloor = buildingAndFloor + "%"
+
 	db := infra.DBInit()
+
+	rooms := []model.Room{}
+	db.Order("room_no").
+		Select("room_no").
+		Where("room_no LIKE ?", buildingAndFloor).
+		Find(&rooms)
+
+	roomSlice := createRoomsSlice(rooms)
+	fmt.Println(roomSlice)
 
 	roomResults := []model.RoomResult{}
 	result := db.Order("timetables.room_no, timetables.time_no").Table("timetables").
@@ -92,4 +102,12 @@ func createRoomInfoJson(roomInfos []model.RoomResult) map[string][]Class {
 	fmt.Println(eachRoomInfos)
 	return eachRoomInfos
 
+}
+
+func createRoomsSlice(rooms []model.Room) []string {
+	roomSlice := []string{}
+	for _, v := range rooms {
+		roomSlice = append(roomSlice, v.RoomNo)
+	}
+	return roomSlice
 }
