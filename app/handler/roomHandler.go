@@ -25,13 +25,15 @@ func GetRoomInfo(c *gin.Context) {
 	//roomNumberの上二桁だけ切り取り
 	buildingNumAndFloor := roomNum / 100
 	fmt.Println(buildingNumAndFloor)
-
+	buildingAndFloor := strconv.FormatInt(buildingNumAndFloor, 10)
+	buildingAndFloor = buildingAndFloor + "%"
 	db := infra.DBInit()
 
 	roomResults := []model.RoomResult{}
 	result := db.Order("timetables.room_no, timetables.time_no").Table("timetables").
 		Select("timetables.room_no, timetables.time_no, teachers.teacher_name, timetables.subject_name").
 		Joins("left join teachers on timetables.teacher_no = teachers.teacher_no").
+		Where("timetables.room_no LIKE ?", buildingAndFloor).
 		Scan(&roomResults)
 
 	if result.Error != nil {
