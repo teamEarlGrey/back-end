@@ -11,6 +11,8 @@ services:
       dockerfile: Dockerfile-alpine
     ports:
       - 4000:3000
+    environment:
+      TZ: Asia/Tokyo
     depends_on:
       - db
   db:

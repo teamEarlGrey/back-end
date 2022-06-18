@@ -3,6 +3,8 @@ package handler
 import (
 	"fmt"
 	"net/http"
+	"reflect"
+	"time"
 
 	//"github.com/Kantaro0829/go-gin-test/auth"
 	"github.com/Kantaro0829/go-gin-test/infra"
@@ -12,6 +14,7 @@ import (
 	//"github.com/Kantaro0829/go-gin-test/model"
 	//"github.com/gin-gonic/gin"
 	//"golang.org/x/crypto/bcrypt"
+
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -30,6 +33,13 @@ func GetRoomInfo(c *gin.Context) {
 
 	db := infra.DBInit()
 
+	today := time.Now()
+	fmt.Println(today)
+	dayOfWeek := today.Weekday().String() // 曜日の取得
+	fmt.Println(dayOfWeek)
+	fmt.Println(reflect.TypeOf(dayOfWeek))
+	fmt.Println(dayOfWeek[0:3])
+
 	rooms := []model.Room{}
 	db.Order("room_no").
 		Select("room_no").
@@ -43,7 +53,7 @@ func GetRoomInfo(c *gin.Context) {
 	result := db.Order("timetables.room_no, timetables.time_no").Table("timetables").
 		Select("timetables.room_no, timetables.time_no, teachers.teacher_name, timetables.subject_name").
 		Joins("left join teachers on timetables.teacher_no = teachers.teacher_no").
-		Where("timetables.room_no LIKE ?", buildingAndFloor).
+		Where("timetables.room_no LIKE ? AND timetables.youbi = ?", buildingAndFloor, "Fri").
 		Scan(&roomResults)
 
 	if result.Error != nil {
@@ -57,8 +67,6 @@ func GetRoomInfo(c *gin.Context) {
 	}
 
 	jsonToResponse := createRoomInfoJson(roomResults)
-
-	//c.JSON(http.StatusOK, gin.H{"message": buildingNumAndFloor})
 	c.JSON(http.StatusOK, jsonToResponse)
 }
 
@@ -82,8 +90,10 @@ func createRoomInfoJson(roomInfos []model.RoomResult) map[string][]Class {
 		}
 
 		if currentRoomNo != v.RoomNo {
+
 			//以前の教室番号と違う教室番号の場合新しい連想配列を作る
 			eachRoomInfos[currentRoomNo] = roomInfo
+
 			roomInfo = []Class{} //各教室1~5限情報をを格納する配列の初期化
 			currentRoomNo = v.RoomNo
 		}
