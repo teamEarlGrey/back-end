@@ -32,17 +32,20 @@ func Getting(c *gin.Context) {
 }
 
 func UserReg(c *gin.Context) {
-	var userJson json.JsonRequestUser
+	var userJson json.JsonRequestUser //受け取るJson配列の型宣言app/json/jsonRequest
 
+	//上で宣言した構造体にJsonをバインド。エラーならエラー処理を返す
 	if err := c.ShouldBindJSON(&userJson); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	//それぞれJson配列の値を変数に代入
 	mail := userJson.UserMail
 	age := userJson.UserAge
 	password := userJson.UserPassword
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 12) //ハッシュ
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 12) //パスワードハッシュ化
 
 	if err != nil {
 		panic("failed to hash password")
@@ -57,6 +60,7 @@ func UserReg(c *gin.Context) {
 	}
 	fmt.Println("登録されたパスワード")
 	fmt.Println(user.Password)
+	//userのIdとメールアドレスを元にJWTを発行しているけどとりあえずここは無視してOK
 	token := auth.CreateTokenString(user.ID, user.Mail)
 
 	c.JSON(http.StatusOK, gin.H{"message": "data was inserted", "token": token})
@@ -75,7 +79,7 @@ func UserLogin(c *gin.Context) {
 
 	db := infra.DBInit()
 	user := model.User{}
-
+	//select するときはこんな感じselect paasword, mail, id from users where mail = "test@gmail.com";
 	result := db.Select("password", "mail", "id").Where("mail = ?", mail).First(&user)
 
 	if result.Error != nil {
@@ -83,6 +87,7 @@ func UserLogin(c *gin.Context) {
 		return
 	}
 
+	//パスワードがあっているかの確認
 	if isAuthorized := bcrypt.CompareHashAndPassword(user.Password, []byte(password)); isAuthorized != nil {
 
 		fmt.Println("不一致")
