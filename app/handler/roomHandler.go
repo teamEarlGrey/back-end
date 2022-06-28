@@ -66,8 +66,8 @@ func GetRoomInfo(c *gin.Context) {
 		fmt.Printf("%v, %v, %v, %v\n", v.RoomNo, v.TimeNo, v.TeacherName, v.SubjectName)
 	}
 
-	jsonToResponse := createRoomInfoJson(roomResults)
-	c.JSON(http.StatusOK, jsonToResponse)
+	roomInfo := createRoomInfoJson(roomResults)
+	c.JSON(http.StatusOK, gin.H{"room_info": roomInfo, "resavations": "予約の連想配列（後で変更）"})
 }
 
 type Class struct {
@@ -110,6 +110,7 @@ func createRoomInfoJson(roomInfos []model.RoomResult) map[string][]Class {
 	eachRoomInfos[currentRoomNo] = roomInfo
 	fmt.Println("------------------出来上がったJson---------------------")
 	fmt.Println(eachRoomInfos)
+
 	return eachRoomInfos
 
 }
