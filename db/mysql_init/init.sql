@@ -3,7 +3,7 @@ use earlGrey;
 
 -- 何限目の情報を格納している
 CREATE TABLE timers(
-	time_no char(3) not null,
+	time_no char(10) not null,
 	s_time char(5) not null,
 	e_time char(5)not null,
 	updated_at datetime,
