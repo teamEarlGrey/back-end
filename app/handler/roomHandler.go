@@ -67,13 +67,26 @@ func GetRoomInfo(c *gin.Context) {
 	}
 
 	roomInfo := createRoomInfoJson(roomResults)
-	c.JSON(http.StatusOK, gin.H{"room_info": roomInfo, "resavations": "予約の連想配列（後で変更）"})
+	reservationInfo := createReservationInfoJson()
+	response := AllInfo{NormalInfo: roomInfo, ReservationInfo: reservationInfo}
+	c.JSON(http.StatusOK, response)
 }
 
 type Class struct {
 	TimeNo      string
 	TeacherName string
 	SubjectName string
+}
+
+type AllInfo struct {
+	NormalInfo      map[string][]Class
+	ReservationInfo map[string]string
+}
+
+func createReservationInfoJson() map[string]string {
+	reservationInfos := make(map[string]string)
+	reservationInfos["reservation"] = "予約"
+	return reservationInfos
 }
 
 func createRoomInfoJson(roomInfos []model.RoomResult) map[string][]Class {
