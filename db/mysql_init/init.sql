@@ -70,7 +70,7 @@ INSERT INTO teachers(teacher_name, per_no)
 -- 予約申請の状態を格納している（承認など）
 CREATE TABLE states(
 	state_no int auto_increment,
-	state_name char(10) not null,
+	state_name char(20) not null,
 	updated_at datetime,
 	created_at datetime,
 	deleted_at datetime,
@@ -121,7 +121,7 @@ INSERT INTO rooms(room_no, memo)
 CREATE TABLE timetables(
 	No int auto_increment,
 	room_no varchar(4) not null,
-	subject_name varchar(40) not null,
+	subject_name varchar(255) not null,
 	youbi char(3) not null,
 	teacher_no int not null,
 	time_no char(10) not null,
