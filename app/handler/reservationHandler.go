@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Kantaro0829/go-gin-test/infra"
@@ -8,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ReservationInfo(c *gin.Context){
+func ReservationInfo(c *gin.Context) {
 	// TODO: /modelにreservationsから取ってくる型宣言をするgoファイルを作る
 
 	// db.goからmysql内のDBにアクセスしてる
@@ -31,8 +32,42 @@ func ReservationInfo(c *gin.Context){
 	c.JSON(http.StatusOK, json)
 }
 
-func createReservationInfoJson(reseInfo []model.Reservation) map[string][]Class{
-	return
+type reseClass struct {
+	RoomNo string
+	Stime  string
+	Etime  string
 }
 
+func createReservationInfoJson(reseInfos []model.Reservation) map[string][]reseClass {
+	//各教室の予約状況を格納するJson配列を作成
+	var roomNo string
+	reseRoomInfo := make(map[string][]reseClass)
+	reseInfo := []reseClass{}
 
+	for i, v := range reseInfos {
+		fmt.Printf("%v, %v, %v\n", v.RoomNo, v.STime, v.ETime)
+
+		if i == 0 {
+			roomNo = v.RoomNo
+		}
+
+		if roomNo != v.RoomNo {
+			reseRoomInfo[roomNo] = reseInfo
+
+			reseInfo = []reseClass{}
+			roomNo = v.RoomNo
+		}
+
+		//各教室の予約状況を配列に格納する
+		reseInfo = append(reseInfo, reseClass{
+			RoomNo: v.RoomNo,
+			Stime:  v.STime,
+			Etime:  v.ETime,
+		})
+	}
+	// reseRoomInfo[roomNo] = reseInfo
+	fmt.Println("------------------出来上がったJson---------------------")
+	fmt.Println(reseRoomInfo)
+	return reseRoomInfo
+
+}
