@@ -275,4 +275,5 @@ CREATE TABLE reservations(
 
 -- sample data
 INSERT INTO reservations(teacher_no, room_no, rese_date, s_time, e_time, purpose, request_date, state_no)
-  VALUES(1, "1204", "2022-06-01", "12:00", "13:00", "面談", "2022-05-27", 2);
+  VALUES(1, "1204", "2022-06-01", "12:00", "13:00", "面談", "2022-05-27", 2),
+	(2, "2301", "2022-07-07", "13:00", "15:00", "面談", "2022-07-01", 1);

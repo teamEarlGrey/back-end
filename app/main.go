@@ -25,6 +25,10 @@ func main() {
 		user.POST("/validate", handler.SampleJwtValidation)
 
 	}
+	reservation := router.Group("/reservation")
+	{
+		reservation.GET("/getRese", handler.ReservationInfo)
+	}
 
 	room := router.Group("/room")
 	{
