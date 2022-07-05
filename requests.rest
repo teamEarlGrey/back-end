@@ -52,3 +52,6 @@ GET http://localhost:4000/room/1234/
 ###
 GET http://localhost:4000/room/2301
 
+
+###
+GET http://localhost:4000/reservation/getRese
