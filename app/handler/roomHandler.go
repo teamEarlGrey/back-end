@@ -67,7 +67,7 @@ func GetRoomInfo(c *gin.Context) {
 	}
 
 	roomInfo := createRoomInfoJson(roomResults)
-	reservationInfo := createReservationInfoJson()
+	reservationInfo := createReservationJson()
 	response := AllInfo{NormalInfo: roomInfo, ReservationInfo: reservationInfo}
 	c.JSON(http.StatusOK, response)
 }
@@ -83,7 +83,7 @@ type AllInfo struct {
 	ReservationInfo map[string]string
 }
 
-func createReservationInfoJson() map[string]string {
+func createReservationJson() map[string]string {
 	reservationInfos := make(map[string]string)
 	reservationInfos["reservation"] = "予約"
 	return reservationInfos
