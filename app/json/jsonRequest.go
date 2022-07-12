@@ -26,3 +26,8 @@ type DeleteUserJson struct {
 type SampleValidationJson struct {
 	Token string `json:"token"`
 }
+
+type SensorInfoJson struct {
+	RoomNo     string `json:"room_no"`
+	IsDetected bool   `json:"is_detected"`
+}
