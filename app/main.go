@@ -35,6 +35,11 @@ func main() {
 		room.GET("/:roomNo", handler.GetRoomInfo)
 	}
 
+	sensor := router.Group("/sensor")
+	{
+		sensor.POST("update", handler.UpdateDetectingInfo)
+	}
+
 	router.Run(":3000")
 
 }
