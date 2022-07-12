@@ -10,3 +10,8 @@ type Room struct {
 	Memo       string
 	IsDetected bool
 }
+
+type RoomScan struct {
+	RoomNo     string
+	IsDetected bool
+}
