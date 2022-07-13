@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	//"github.com/Kantaro0829/go-gin-test/auth"
-	"github.com/Kantaro0829/go-gin-test/infra"
+	//"github.com/Kantaro0829/go-gin-test/infra"
 	"github.com/Kantaro0829/go-gin-test/model"
+	"gorm.io/gorm"
 
 	"github.com/Kantaro0829/go-gin-test/json"
 	//"golang.org/x/crypto/bcrypt"
@@ -14,6 +14,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func temp() int {
+	return 1
+}
+
+//db := infra.DBInit()
 func UpdateDetectingInfo(c *gin.Context) {
 	var sensorJson json.SensorInfoJson //受け取るJson配列の型宣言app/json/jsonRequest
 
@@ -31,12 +36,14 @@ func UpdateDetectingInfo(c *gin.Context) {
 	fmt.Println(roomNo)
 	fmt.Println(isDetected)
 
-	db := infra.DBInit()
+	//db := infra.DBInit()
+	tx := db.Session(&gorm.Session{SkipDefaultTransaction: true})
 	room := model.Room{}
 
-	result := db.Select("is_detected, id").Where("room_no = ?", roomNo).First(&room)
+	result := tx.Select("is_detected, id").Where("room_no = ?", roomNo).First(&room)
 
 	if result.Error != nil {
+		tx.Rollback()
 		c.JSON(http.StatusBadRequest, gin.H{"status": 400, "message": "データがテーブルに存在していません。"})
 		return
 	}
@@ -45,6 +52,7 @@ func UpdateDetectingInfo(c *gin.Context) {
 	fmt.Println(room.ID)
 
 	if isDetected == room.IsDetected {
+		tx.Rollback()
 		c.JSON(http.StatusOK, gin.H{"status": 200, "message": "以前の検知結果と同じです。"})
 		return
 	}
@@ -53,12 +61,20 @@ func UpdateDetectingInfo(c *gin.Context) {
 	db.First(&room)
 	room.IsDetected = isDetected
 
-	if result = db.Save(&room); result.Error != nil {
+	// if result = db.Save(&room); result.Error != nil {
+	// 	fmt.Println("データのの更新ができていません")
+	// 	c.JSON(http.StatusServiceUnavailable, gin.H{"status": 503})
+	// 	return
+	// }
+
+	if result = tx.Save(&room); result.Error != nil {
 		fmt.Println("データのの更新ができていません")
+		tx.Rollback()
 		c.JSON(http.StatusServiceUnavailable, gin.H{"status": 503})
 		return
 	}
-
+	tx.Commit()
 	c.JSON(http.StatusOK, gin.H{"message": "登録完了"})
+	return
 
 }
