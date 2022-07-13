@@ -7,7 +7,7 @@ import (
 	"time"
 
 	//"github.com/Kantaro0829/go-gin-test/auth"
-	"github.com/Kantaro0829/go-gin-test/infra"
+	//"github.com/Kantaro0829/go-gin-test/infra"
 	"github.com/Kantaro0829/go-gin-test/model"
 
 	//"github.com/Kantaro0829/go-gin-test/json"
@@ -20,6 +20,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+var a = temp()
+
 func GetRoomInfo(c *gin.Context) {
 
 	roomNumStr := c.Param("roomNo")
@@ -31,7 +33,7 @@ func GetRoomInfo(c *gin.Context) {
 	buildingAndFloor := strconv.FormatInt(buildingNumAndFloor, 10)
 	buildingAndFloor = buildingAndFloor + "%"
 
-	db := infra.DBInit()
+	//db := infra.DBInit()
 
 	today := time.Now()
 	fmt.Println(today)

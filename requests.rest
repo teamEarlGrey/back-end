@@ -61,7 +61,7 @@ POST http://localhost:4000/sensor/update
 Content-Type: application/json
 
 {
-    "room_no": "2301", "is_detected": false
+    "room_no": "2301", "is_detected": true
 }
 
 ###
