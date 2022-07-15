@@ -31,3 +31,9 @@ type SensorInfoJson struct {
 	RoomNo     string `json:"room_no"`
 	IsDetected bool   `json:"is_detected"`
 }
+
+type RegTeacher struct {
+	TeacherName string `json:"teacher_name"`
+	Password    string `json:"password"`
+	TeacherMail string `json:"mail"`
+}
