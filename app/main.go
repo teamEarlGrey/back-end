@@ -22,7 +22,7 @@ func main() {
 		user.POST("/login", handler.UserLogin)
 		user.PUT("/update", handler.UpdateUser)
 		user.DELETE("/delete", handler.DeleteUser)
-		user.POST("/validate", handler.SampleJwtValidation)
+		//user.POST("/validate", handler.SampleJwtValidation)
 
 	}
 	reservation := router.Group("/reservation")
@@ -40,6 +40,10 @@ func main() {
 		sensor.POST("update", handler.UpdateDetectingInfo)
 	}
 
+	teacher := router.Group("/teacher")
+	{
+		teacher.POST("reg", handler.TeacherReg)
+	}
 	router.Run(":3000")
 
 }

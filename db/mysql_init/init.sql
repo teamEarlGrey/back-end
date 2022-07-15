@@ -39,34 +39,36 @@ INSERT INTO permissions(permission)
 
 -- 先生の情報
 CREATE TABLE teachers(
-	teacher_no int auto_increment,
+	id int auto_increment,
 	teacher_name varchar(20) not null,
+	password varchar(255) not null,
 	per_no int not null,
-	updated_at datetime,
-	created_at datetime,
-	deleted_at datetime,
+	mail varchar(255) unique,
+	updated_at datetime null,
+	created_at datetime null,
+	deleted_at datetime null,
 
-	primary key(teacher_no),
+	primary key(id),
 	foreign key(per_no) references permissions(per_no) ON DELETE CASCADE ON UPDATE CASCADE
 
 );
 
 -- sampel data
-INSERT INTO teachers(teacher_name, per_no)
-  VALUES("", 1),
-  		("内山豊彦", 1),
-        ("武次順平", 1),
-		("小戎冴茄", 2),
-		("杉原宏", 1),
-		("上村香代子", 1);
+INSERT INTO teachers(teacher_name, per_no, password, mail)
+  VALUES("", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test1@gmail.com"),
+  		("内山豊彦", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test2@gmail.com"),
+        ("武次順平", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test3@gmail.com"),
+		("小戎冴茄", 2, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test4@gmail.com"),
+		("杉原宏", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test5@gmail.com"),
+		("上村香代子", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test6@gmail.com");
 
-INSERT INTO teachers(teacher_name, per_no)
-	VALUES("山本太", 1),
-			("加藤昌", 1),
-			("石田雄太", 1),
-			("小出操", 1),
-			("曽根国雄", 2),
-			("先生名前（仮）", 1);
+INSERT INTO teachers(teacher_name, per_no, password, mail)
+	VALUES("山本太", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test7@gmail.com"),
+			("加藤昌", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test8@gmail.com"),
+			("石田雄太", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test9@gmail.com"),
+			("小出操", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test10@gmail.com"),
+			("曽根国雄", 2, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test11@gmail.com"),
+			("先生名前（仮）", 1, "$2a$12$r.Mj6LHidxSpvaIncoMY0OiKP3OgoywlkO9xydXNLQs/iF8G/Mhsi", "test12@gmail.com");
 
 -- 予約申請の状態を格納している（承認など）
 CREATE TABLE states(
@@ -136,7 +138,7 @@ CREATE TABLE timetables(
 
 	primary key(No),
 	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
-	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(teacher_no) references teachers(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key(time_no) references timers(time_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -270,7 +272,7 @@ CREATE TABLE reservations(
 	deleted_at datetime,
 
 	primary key(rese_no),
-	foreign key(teacher_no) references teachers(teacher_no) ON DELETE CASCADE ON UPDATE CASCADE,
+	foreign key(teacher_no) references teachers(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key(room_no) references rooms(room_no) ON DELETE CASCADE ON UPDATE CASCADE,
 	foreign key(state_no) references states(state_no) ON DELETE CASCADE ON UPDATE CASCADE
 );
