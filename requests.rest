@@ -74,3 +74,10 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:4000/teacher/login
+Content-Type: application/json
+
+{
+    "password": "password", "mail": "test3@ecc.ac.jp"
+}

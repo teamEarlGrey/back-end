@@ -52,7 +52,7 @@ func TeacherReg(c *gin.Context) {
 	fmt.Println(teacher.TeacherName)
 	fmt.Println(teacher.ID)
 
-	//IDと権限番号で元にJWTを発行
+	//IDとmailを元にJWTを発行
 	token := auth.CreateTokenString(
 		teacher.ID,
 		teacher.Mail, //teacher.PerNo,
@@ -60,4 +60,64 @@ func TeacherReg(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "data was inserted", "token": token})
 
+}
+
+func TeacherLogin(c *gin.Context) {
+	var teacherLoginJson json.TeacherLogin
+	//上で宣言した構造体にJsonをバインド。エラーならエラー処理を返す
+	if err := c.ShouldBindJSON(&teacherLoginJson); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	password := teacherLoginJson.Password
+	mail := teacherLoginJson.Mail
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 12)
+	if err != nil {
+		panic("failed to hash password")
+	}
+	fmt.Println("以下ハッシュ化されたパスワード")
+	fmt.Println(string(hashedPassword))
+
+	teacher := model.Teacher{}
+	//password 取得
+	if err := db.Select("password", "id", "mail").Where("mail = ?", mail).First(&teacher).Error; err != nil {
+		//error handling
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	fmt.Printf("mail:%v, password:%v, id:%v", teacher.Mail, teacher.Password, teacher.ID)
+
+	//パスワードがあっているかの確認
+	if isAuthorized := bcrypt.CompareHashAndPassword([]byte(teacher.Password), []byte(password)); isAuthorized != nil {
+
+		fmt.Println("不一致")
+		c.JSON(http.StatusUnauthorized, gin.H{"message": "failed to login"})
+		return
+
+	}
+
+	//IDとmailを元にJWTを発行
+	token := auth.CreateTokenString(
+		teacher.ID,
+		teacher.Mail,
+	)
+
+	c.JSON(http.StatusOK, gin.H{"message": "ログイン成功", "token": token})
+}
+
+func SampleJwtValidation(c *gin.Context) {
+	var sampleValidationJson json.SampleValidationJson
+
+	if err := c.ShouldBindJSON(&sampleValidationJson); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	token := sampleValidationJson.Token
+
+	sample := auth.ValidateTokenString(token)
+	c.JSON(http.StatusOK, gin.H{"mail": sample.Mail, "id": sample.Id})
 }

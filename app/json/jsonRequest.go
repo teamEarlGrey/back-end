@@ -37,3 +37,8 @@ type RegTeacher struct {
 	Password    string `json:"password"`
 	TeacherMail string `json:"mail"`
 }
+
+type TeacherLogin struct {
+	Password string `json:"password"`
+	Mail     string `json:"mail"`
+}
