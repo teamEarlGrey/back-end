@@ -43,6 +43,7 @@ func main() {
 	teacher := router.Group("/teacher")
 	{
 		teacher.POST("reg", handler.TeacherReg)
+		teacher.POST("login", handler.TeacherLogin)
 	}
 	router.Run(":3000")
 
