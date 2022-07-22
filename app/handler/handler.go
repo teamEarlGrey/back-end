@@ -4,16 +4,25 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Kantaro0829/go-gin-test/auth"
-	"github.com/Kantaro0829/go-gin-test/infra"
+	//"github.com/Kantaro0829/go-gin-test/infra"
 	"github.com/Kantaro0829/go-gin-test/json"
 	"github.com/Kantaro0829/go-gin-test/model"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
+var dsn = "root:ecc@tcp(db:3306)/earlGrey?charset=utf8mb4&parseTime=True&loc=Local"
+var db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+// if err != nil {
+// 	panic(err.Error)
+// }
+
 func Getting(c *gin.Context) {
-	db := infra.DBInit()
+	//db := infra.DBInit()
 	timers := []model.Timer{}
 
 	if result := db.Find(&timers); result.Error != nil {
@@ -51,7 +60,7 @@ func UserReg(c *gin.Context) {
 		panic("failed to hash password")
 	}
 
-	db := infra.DBInit()
+	//db := infra.DBInit()
 	user := model.User{Mail: mail, Password: hashedPassword, Age: age}
 
 	if result := db.Create(&user); result.Error != nil {
@@ -61,11 +70,11 @@ func UserReg(c *gin.Context) {
 	fmt.Println("登録されたパスワード")
 	fmt.Println(user.Password)
 	//userのIdとメールアドレスを元にJWTを発行しているけどとりあえずここは無視してOK
-	token := auth.CreateTokenString(user.ID, user.Mail)
+	// 	token := auth.CreateTokenString(user.ID, user.Mail)
 
-	c.JSON(http.StatusOK, gin.H{"message": "data was inserted", "token": token})
+	// 	c.JSON(http.StatusOK, gin.H{"message": "data was inserted", "token": token})
+	// }
 }
-
 func UserLogin(c *gin.Context) {
 	var userLoginJson json.JsonRequestUser
 
@@ -77,7 +86,7 @@ func UserLogin(c *gin.Context) {
 	mail := userLoginJson.UserMail
 	password := userLoginJson.UserPassword
 
-	db := infra.DBInit()
+	//db := infra.DBInit()
 	user := model.User{}
 	//select するときはこんな感じselect paasword, mail, id from users where mail = "test@gmail.com";
 	result := db.Select("password", "mail", "id").Where("mail = ?", mail).First(&user)
@@ -96,8 +105,8 @@ func UserLogin(c *gin.Context) {
 
 	}
 
-	token := auth.CreateTokenString(user.ID, user.Mail)
-	c.JSON(http.StatusOK, gin.H{"message": "succeed login", "token": token})
+	// token := auth.CreateTokenString(user.ID, user.Mail)
+	// c.JSON(http.StatusOK, gin.H{"message": "succeed login", "token": token})
 
 }
 
@@ -114,7 +123,7 @@ func UpdateUser(c *gin.Context) {
 	newMail := updateUserJson.NewMail
 	newPassword := updateUserJson.NewPassword
 
-	db := infra.DBInit()
+	//db := infra.DBInit()
 	user := model.User{}
 
 	result := db.Select("password").Where("mail = ?", mail).First(&user)
@@ -169,7 +178,7 @@ func DeleteUser(c *gin.Context) {
 	mail := deleteUserJson.Mail
 	password := deleteUserJson.Password
 
-	db := infra.DBInit()
+	//db := infra.DBInit()
 	user := model.User{}
 
 	result := db.Select("password", "ID").Where("mail = ?", mail).First(&user)
@@ -202,16 +211,16 @@ func DeleteUser(c *gin.Context) {
 
 }
 
-func SampleJwtValidation(c *gin.Context) {
-	var sampleValidationJson json.SampleValidationJson
+// func SampleJwtValidation(c *gin.Context) {
+// 	var sampleValidationJson json.SampleValidationJson
 
-	if err := c.ShouldBindJSON(&sampleValidationJson); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
+// 	if err := c.ShouldBindJSON(&sampleValidationJson); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
 
-	token := sampleValidationJson.Token
+// 	token := sampleValidationJson.Token
 
-	sample := auth.ValidateTokenString(token)
-	c.JSON(http.StatusOK, gin.H{"mail": sample.Mail, "id": sample.Id})
-}
+// 	sample := auth.ValidateTokenString(token)
+// 	c.JSON(http.StatusOK, gin.H{"mail": sample.Mail, "id": sample.Id})
+// }

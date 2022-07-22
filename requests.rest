@@ -55,3 +55,29 @@ GET http://localhost:4000/room/2301
 
 ###
 GET http://localhost:4000/reservation/getRese
+
+###
+POST http://localhost:4000/sensor/update
+Content-Type: application/json
+
+{
+    "room_no": "2301", "is_detected": true
+}
+
+###
+
+POST http://localhost:4000/teacher/reg
+Content-Type: application/json
+
+{
+    "teacher_name": "test先生", "password": "password", "mail": "test3@ecc.ac.jp"
+}
+
+###
+
+POST http://localhost:4000/teacher/login
+Content-Type: application/json
+
+{
+    "password": "password", "mail": "test3@ecc.ac.jp"
+}

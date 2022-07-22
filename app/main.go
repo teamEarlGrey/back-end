@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/Kantaro0829/go-gin-test/handler"
 	"github.com/Kantaro0829/go-gin-test/infra"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,6 +11,10 @@ func main() {
 
 	infra.DBInit()
 	router := gin.Default()
+
+	// ここからCorsの設定
+	router.Use(cors.Default())
+
 	user := router.Group("/user")
 	{
 		user.GET("/get", handler.Getting)
@@ -17,7 +22,7 @@ func main() {
 		user.POST("/login", handler.UserLogin)
 		user.PUT("/update", handler.UpdateUser)
 		user.DELETE("/delete", handler.DeleteUser)
-		user.POST("/validate", handler.SampleJwtValidation)
+		//user.POST("/validate", handler.SampleJwtValidation)
 
 	}
 	reservation := router.Group("/reservation")
@@ -30,6 +35,16 @@ func main() {
 		room.GET("/:roomNo", handler.GetRoomInfo)
 	}
 
+	sensor := router.Group("/sensor")
+	{
+		sensor.POST("update", handler.UpdateDetectingInfo)
+	}
+
+	teacher := router.Group("/teacher")
+	{
+		teacher.POST("reg", handler.TeacherReg)
+		teacher.POST("login", handler.TeacherLogin)
+	}
 	router.Run(":3000")
 
 }
