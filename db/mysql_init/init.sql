@@ -40,7 +40,7 @@ INSERT INTO permissions(permission)
 -- 先生の情報
 CREATE TABLE teachers(
 	id int auto_increment,
-	teacher_name varchar(20) not null,
+	teacher_name varchar(255) not null,
 	password varchar(255) not null,
 	per_no int not null,
 	mail varchar(255) unique,
