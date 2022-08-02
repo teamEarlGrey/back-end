@@ -57,7 +57,7 @@ func GetRoomInfo(c *gin.Context) {
 	result := db.Order("timetables.room_no, timetables.time_no").Table("timetables").
 		Select("timetables.room_no, timetables.time_no, teachers.teacher_name, timetables.subject_name").
 		Joins("left join teachers on timetables.teacher_no = teachers.id").
-		Where("timetables.room_no LIKE ? AND timetables.youbi = ?", buildingAndFloor, "Fri").
+		Where("timetables.room_no LIKE ? AND timetables.youbi = ?", buildingAndFloor, dayOfWeek).
 		Scan(&roomResults)
 
 	if result.Error != nil {
