@@ -44,10 +44,12 @@ type TeacherLogin struct {
 }
 
 type JsonReservation struct{
-	TeacherNo	int			`json:"teacher_no"`
-	RoomNo		string	`json:"room_no"`
-	ReseDate	string	`json:"rese_date"`
-	StartT		string	`json:"s_time"`
-	EndT			string	`json:"e_time"`
-	StateNo		int			`json:"state_no"`
+	TeacherNo		int			`json:"teacher_no"`
+	RoomNo			string	`json:"room_no"`
+	ReseDate		string	`json:"rese_date"`
+	StartT			string	`json:"s_time"`
+	EndT				string	`json:"e_time"`
+	Purpose 		string	`json:"purpose"`
+	RequestDate string	`json:"request_date"`
+	StateNo			int			`json:"state_no"`
 }
