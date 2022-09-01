@@ -89,35 +89,42 @@ func insertReseInfo(c *gin.Context) {
 	}
 
 	// 取得したJsonの中身を変数に格納する
-	//teacherNo := reseJson.TeacherNo
+	teacherNo := reseJson.TeacherNo
 	roomNo := reseJson.RoomNo
 	reseDate := reseJson.ReseDate
 	startTime := reseJson.StartT
 	endTime := reseJson.EndT
-	//stateNo := reseJson.StateNo
+	purpose := reseJson.Purpose
+	requestDate := reseJson.RequestDate
+	stateNo := reseJson.StateNo
 
 	// db.goからmysql内のDBにアクセス
 	data := infra.DBInit()
 
 	reseI := []model.Reservation{}
 
-	// status = 1:承認済み、時間帯・教室番号がブッキングしてない
-	// rese := data.Select("room_no, teacher_no, rese_date, s_tiem, e_time").
-	// 	Where("state_no = 1 AND rese_date = ? AND room_no = ?", reseDate, roomNo).
-	// 	Scan(&reseI)
-
 	// ブッキングしないために、該当するデータの個数を取得する
 	// 教室番号・日付・開始時間・終了時間がブッキングしてないか
-	exi := data.Select("IF(EXISTS(Select * FROM reservations WHERE rese_date = ? AND room_no = ? AND s_time = ? AND e_time = ?), 1, 0)",
-		reseDate, roomNo, startTime, endTime).Scan(&reseI)
+	// state_no = 1：予約確定済みがあるかどうか
+	r := data.Where("`rese_date` = ? AND `room_no` = ? AND `s_time` = ? AND `e_time` = ? AND `state_no` = 1", reseDate, roomNo, startTime, endTime).Limit(1).Find(&reseI)
 
-	// 当てはまるデータがなかった場合（予約可能な状態）
-	if exi == nil {
-		// insertの処理を書く
+	// エラー処理
+	if r.Error != nil{
+		print("error")
+	}
 
+	// 該当するデータの件数を取得している
+	ra := r.RowsAffected
+
+	// 該当するデータがなかった時
+	if ra == 0 {
+		getExi := reseI{TeacherNo : teacherNo, RoomNo: roomNo, ReseDate : reseDate, StartT : startTime, EndT : endTime, Purpose : purpose, RequestDate : requestDate, StateNo : stateNo}
+		insertData := data.Create(&getExi)
 	}
 }
 
 // TODO:insertに使う構造体を作成する
 type insertRese struct {
+	// データ：teacher_no, room_no, res_date, stime, etime, purpus, request_date,state_no
+
 }
